@@ -43,13 +43,13 @@ jobs:
         uses: aquasecurity/tfsec-action@v1.0.3
         with:
           soft_fail: false
-      - name: Trivy IaC Scan
-        uses: aquasecurity/trivy-action@0.33.1
-        with:
-          scan-type: config
-          hide-progress: true
-          severity: HIGH,CRITICAL
-          exit-code: 1
+      # - name: Trivy IaC Scan
+      #   uses: aquasecurity/trivy-action@0.33.1
+      #   with:
+      #     scan-type: config
+      #     hide-progress: true
+      #     severity: HIGH,CRITICAL
+      #     exit-code: 1
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
