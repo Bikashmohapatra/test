@@ -39,10 +39,18 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate
-      - name: Run tfsec
+      - name: Terraform Static Code Test Tfsec
         uses: aquasecurity/tfsec-action@v1.0.3
         with:
           soft_fail: false
+      - name: Trivy IaC Scan
+        uses: aquasecurity/trivy-action@v0.20.0
+        with:
+          scan-type: config
+          hide-progress: true
+          severity: HIGH,CRITICAL
+          exit-code: 1
+
       - name: Terraform Plan
         run: terraform plan -out=tfplan
 
