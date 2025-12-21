@@ -6,10 +6,12 @@
 #   force_destroy = true
 # }
 
-resource "aws_iam_user" "demo_user" {
-  for_each = var.iam_username
-  name     = each.value
-}
+# resource "aws_iam_user" "demo_user" {
+#   for_each = var.iam_username
+#   name     = each.value
+#   lifecycle {
+#     create_before_destroy = true
+# }
 
 
 # # Attach a managed policy (e.g., AdministratorAccess for demo)
