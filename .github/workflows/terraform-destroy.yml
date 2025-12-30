@@ -17,3 +17,4 @@ jobs:
       destroy: true
     secrets:
       AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN_PROD }}
+      AWS_REGION:  ${{ secrets.AWS_REGION }}
