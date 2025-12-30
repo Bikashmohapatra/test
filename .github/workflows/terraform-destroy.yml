@@ -32,9 +32,8 @@ jobs:
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN_PROD }}
-          aws-region: ap-south-1
-
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
       - uses: actions/download-artifact@v4
         with:
           name: terraform-plan
