@@ -19,6 +19,8 @@ on:
     secrets:
       AWS_ROLE_ARN:
         required: true
+      AWS_REGION:
+        required: true
 permissions:
   id-token: write   # REQUIRED for OIDC
   contents: read
