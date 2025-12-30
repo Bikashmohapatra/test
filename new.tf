@@ -44,7 +44,7 @@ module "ec2_instance" {
 
               # Check Minikube status
               sudo -u ec2-user minikube status
-              E
+              EOF
 
   tags = {
     Terraform   = "true"
