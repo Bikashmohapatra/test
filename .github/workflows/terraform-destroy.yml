@@ -12,11 +12,7 @@ jobs:
     name: Terraform Destroy Plan
     uses: ./.github/workflows/terraform-plan.yml
     with:
-      tf_version: "1.14.3"
-      aws_region: "ap-south-1"
       destroy: true
-    secrets:
-      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN_PROD }}
   apply-destroy:
     name: Terraform Destroy Apply
     needs: plan-destroy
