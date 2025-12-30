@@ -1,7 +1,7 @@
-name: Terraform Destroy
+name: Terraform Destroy (Manual)
 
 on:
-  workflow_dispatch   # manual trigger only
+  workflow_dispatch:   # 👈 manual trigger only
 
 permissions:
   id-token: write
@@ -12,32 +12,8 @@ jobs:
     name: Terraform Destroy Plan
     uses: ./.github/workflows/terraform-plan.yml
     with:
+      tf_version: "1.14.3"
+      aws_region: "ap-south-1"
       destroy: true
-  apply-destroy:
-    name: Terraform Destroy Apply
-    needs: plan-destroy
-    runs-on: ubuntu-latest
-    environment: production   # approval gate
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "1.14.3"
-
-      - name: Configure AWS credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: terraform-plan
-
-      - run: terraform init -input=false
-
-      - name: Terraform Destroy
-        run: terraform apply -input=false tfplan
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN_PROD }}
