@@ -4,6 +4,21 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
+  workflow_call:
+    inputs:
+      tf_version:
+        required: true
+        type: string
+      aws_region:
+        required: true
+        type: string
+      destroy:
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      AWS_ROLE_ARN:
+        required: true
 
 permissions:
   id-token: write   # REQUIRED for OIDC
@@ -52,7 +67,12 @@ jobs:
       #     exit-code: 1
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: |
+            if [ "${{ inputs.destroy }}" = "true" ]; then
+              terraform plan -destroy -out=tfplan
+            else
+              terraform plan -out=tfplan
+            fi
 
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
