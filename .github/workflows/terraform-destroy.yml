@@ -1,0 +1,45 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch   # manual trigger only
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  plan-destroy:
+    name: Terraform Destroy Plan
+    uses: ./.github/workflows/terraform-plan.yml
+    with:
+      tf_version: "1.6.6"
+      aws_region: "ap-south-1"
+      destroy: true
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN_PROD }}
+  apply-destroy:
+    name: Terraform Destroy Apply
+    needs: plan-destroy
+    runs-on: ubuntu-latest
+    environment: production   # approval gate
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.6"
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN_PROD }}
+          aws-region: ap-south-1
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: terraform-plan
+
+      - run: terraform init -input=false
+
+      - name: Terraform Destroy
+        run: terraform apply -input=false tfplan
