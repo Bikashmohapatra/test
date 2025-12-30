@@ -16,5 +16,5 @@ jobs:
       aws_region: "ap-south-1"
       destroy: true
     secrets:
-      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN_PROD }}
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
       AWS_REGION:  ${{ secrets.AWS_REGION }}
