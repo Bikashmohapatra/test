@@ -12,7 +12,7 @@ jobs:
     name: Terraform Destroy Plan
     uses: ./.github/workflows/terraform-plan.yml
     with:
-      tf_version: "1.6.6"
+      tf_version: "1.14.3"
       aws_region: "ap-south-1"
       destroy: true
     secrets:
@@ -28,7 +28,7 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "1.6.6"
+          terraform_version: "1.14.3"
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
