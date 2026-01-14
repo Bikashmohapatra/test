@@ -24,6 +24,27 @@ module "ec2_instance" {
   user_data = <<-EOF
               #!/bin/bash
               set -eux
+              # Detect OS
+              if [ -f /etc/os-release ]; then
+                . /etc/os-release
+              fi
+
+              echo "OS Detected: $NAME"
+
+              # Install SSM Agent if not present
+              if ! systemctl status amazon-ssm-agent >/dev/null 2>&1; then
+                echo "Installing SSM Agent..."
+                dnf install -y amazon-ssm-agent || yum install -y amazon-ssm-agent
+              else
+                echo "SSM Agent already installed"
+              fi
+
+              # Enable and start SSM Agent
+              systemctl enable amazon-ssm-agent
+              systemctl start amazon-ssm-agent
+
+              # Verify status
+              systemctl status amazon-ssm-agent --no-pager
 
               # Update system
               sudo dnf update -y
