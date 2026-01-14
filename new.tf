@@ -8,6 +8,19 @@ module "ec2_instance" {
   key_name      = "test"
   monitoring    = false
   subnet_id     = "subnet-0ed5d2b88c1e41ad5"
+  ############################
+  # Enable SSM Login
+  ############################
+  create_iam_instance_profile = true
+
+  iam_role_name = "ec2-ssm-role"
+
+  iam_role_policies = {
+    SSM = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  }
+  ############################
+  # User Data
+  ############################
   user_data = <<-EOF
               #!/bin/bash
               set -eux
