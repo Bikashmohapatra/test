@@ -10,7 +10,7 @@ module "ec2_instance" {
   subnet_id     = "subnet-0ed5d2b88c1e41ad5"
   ############################
   # Enable SSM Login
-  ############################
+  #############################
   create_iam_instance_profile = true
 
   iam_role_name = "ec2-ssm-role"
