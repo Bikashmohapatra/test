@@ -71,6 +71,7 @@ jobs:
       - name: Terraform Plan
         run: |
             if [ "${{ inputs.destroy }}" = "true" ]; then
+              terrafor force-unlock 580ae19c-0456-e8b8-c117-0d33f8e4d5ca
               terraform plan -destroy -out=tfplan
             else
               terraform plan -out=tfplan
