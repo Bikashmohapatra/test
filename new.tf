@@ -90,6 +90,9 @@ module "ec2_instance" {
               #sudo -u ec2-user minikube status
               EOF
 
+  lifecycle {
+    create_before_destroy = true
+  }
   tags = {
     Terraform   = "true"
     Environment = "test"
