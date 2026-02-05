@@ -16,9 +16,7 @@ module "ec2_instance" {
   # Enable SSM Login
   #############################
   create_iam_instance_profile = true
-
   iam_role_name = "ec2-ssm-role"
-
   iam_role_policies = {
     SSM = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
