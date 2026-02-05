@@ -8,9 +8,10 @@ module "ec2_instance" {
   key_name      = "test"
   monitoring    = false
   subnet_id     = "subnet-0ed5d2b88c1e41ad5"
-  root_block_device =
-    {
+  root_block_device = {
       volume_size = 30
+      volume_type = "gp3"
+      delete_on_termination = true
     }
   ############################
   # Enable SSM Login
